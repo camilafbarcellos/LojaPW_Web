@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titulo">Admin - Fornecedores</ui:define>
+        <ui:define name="conteudo">
+            <h:form id="formListagem" prependId="false">
+                <p:growl/>
+                <br></br>
+                <p:commandButton value="Novo" actionListener="#{controleFornecedor.novo()}"
+                                 icon="pi pi-plus" update="formEdicao" process="@this"
+                                 oncomplete="PF('dlg').show();"/>
+                <!-- Paginação e filtro -->
+                <br></br>
+                <div align="center">
+                    <p:panelGrid columns="11">
+                        <p:outputLabel value="Ordem: "/>
+                        <p:selectOneMenu value="#{controleFornecedor.dao.ordemAtual}"
+                                         converter="#{controleFornecedor.dao.converterOrdem}">
+                            <f:selectItems value="#{controleFornecedor.dao.listaOrdem}"
+                                           var="ord" itemValue="#{ord.atributo}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Filtro"/>
+                        <p:inputText value="#{controleFornecedor.dao.filtro}">
+                            <p:ajax update="listagem" event="blur"/>
+                            <!-- no lugar do Ajax poderia ser um botão -->
+                        </p:inputText>
+                        <p:commandButton value="Filtrar" update="listagem"/>
+                        <p:selectOneMenu value="#{controleFornecedor.dao.maximoObjetos}">
+                            <f:selectItem itemLabel="4" itemValue="4"/>
+                            <f:selectItem itemLabel="8" itemValue="8"/>
+                            <f:selectItem itemLabel="10" itemValue="10"/>
+                            <f:selectItem itemLabel="50" itemValue="50"/>
+                            <f:selectItem itemLabel="100" itemValue="100"/>
+                            <p:ajax update="listagem"/>
+                        </p:selectOneMenu>
+                        <p:commandButton action="#{controleFornecedor.dao.primeiro()}"
+                                         title="Primeiro" update="listagem"
+                                         icon="pi pi-step-backward"/>
+                        <p:commandButton action="#{controleFornecedor.dao.anterior()}"
+                                         title="Anterior" update="listagem"
+                                         icon="pi pi-chevron-left"/>
+                        <p:commandButton action="#{controleFornecedor.dao.proximo()}"
+                                         title="Próximo" update="listagem"
+                                         icon="pi pi-chevron-right"/>
+                        <p:commandButton action="#{controleFornecedor.dao.ultimo()}"
+                                         title="Último" update="listagem"
+                                         icon="pi pi-step-forward"/>
+                    </p:panelGrid>
+                </div>
+                <br></br>
+                <p:dataTable value="#{controleFornecedor.dao.listaObjetos}" var="obj"
+                             id="listagem">
+                    <f:facet name="footer">
+                        <p:outputLabel value="#{controleFornecedor.dao.mensagemNavegacao}"/>
+                    </f:facet>
+                    <p:column headerText="ID">
+                        <p:outputLabel value="#{obj.id}"/>
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <p:outputLabel value="#{obj.nome}"/>
+                    </p:column>
+                    <p:column headerText="CNPJ">
+                        <p:outputLabel value="#{obj.cnpj}"/>
+                    </p:column>
+                    <p:column headerText="Vendedor">
+                        <p:outputLabel value="#{obj.vendedor}"/>
+                    </p:column>
+                    <p:column headerText="E-mail">
+                        <p:outputLabel value="#{obj.email}"/>
+                    </p:column>
+                    <p:column headerText="Ações">
+                        <p:panelGrid columns="2" layout="grid">
+                            <p:commandButton
+                                actionListener="#{controleFornecedor.alterar(obj.id)}"
+                                icon="pi pi-pencil" title="Editar"
+                                update="formEdicao" process="@this"
+                                oncomplete="PF('dlg').show();"/>
+                            <p:commandButton
+                                actionListener="#{controleFornecedor.remover(obj.id)}"
+                                icon="pi pi-trash" title="Remover"
+                                update="@form" process="@this"
+                                onclick="if(!confirm('Confirma a exclusão?')) return false"/>
+                        </p:panelGrid>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            <p:dialog header="Edição" widgetVar="dlg" resizable="false"
+                modal="true" width="50%" height="100%">
+                <h:form id="formEdicao" prependId="false">
+                    <p:growl id="growl"/>
+                    <div align="center">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="ID"/>
+                            <p:inputText value="#{controleFornecedor.objeto.id}"
+                                         size="5" readonly="true"/>
+                            <p:outputLabel value="Nome" for="txtNome"/>
+                            <p:inputText value="#{controleFornecedor.objeto.nome}"
+                                         id="txtNome" size="40" maxlength="40"
+                                         placeholder="Nome da empresa"/>
+                            <p:outputLabel value="CNPJ" for="txtCNPJ"/>
+                            <p:inputText value="#{controleFornecedor.objeto.cnpj}"
+                                         id="txtCNPJ" size="14" maxlength="14"
+                                         placeholder="Número de CNPJ"/>
+                            <p:outputLabel value="Vendedor" for="txtVendedor"/>
+                            <p:inputText value="#{controleFornecedor.objeto.vendedor}"
+                                         id="txtVendedor" size="40" maxlength="40"
+                                         placeholder="Nome do vendedor responsável"/>
+                            <p:outputLabel value="E-mail" for="txtEmail"/>
+                            <p:inputText value="#{controleFornecedor.objeto.email}"
+                                         id="txtEmail" size="40" maxlength="40"
+                                         a:type="email" placeholder="E-mail para contato"/>
+                            <p:outputLabel value="Setor" for="txtSetor"/>
+                            <p:inputText value="#{controleFornecedor.objeto.setor}"
+                                         id="txtSetor" size="40" maxlength="35"
+                                         placeholder="Setor de produtos fornecidos"/>
+                        </p:panelGrid>
+                    </div>
+                    <p:panel>
+                        <div align="center">
+                            <p:commandButton value="Salvar" icon="pi pi-save"
+                                             actionListener="#{controleFornecedor.salvar()}"
+                                             update="formEdicao formListagem"
+                                             oncomplete="if(!args.validationFailed){PF('dlg').hide();})"/>
+                        </div>
+                    </p:panel>
+                </h:form>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+</html>
+

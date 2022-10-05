@@ -12,7 +12,7 @@
             <h:form id="formListagem" prependId="false">
                 <p:growl/>
                 <br></br>
-                <p:commandButton value="Novo" actionListener="#{controleFornecedor.novo()}"
+                <p:commandButton value="Novo fornecedor" actionListener="#{controleFornecedor.novo()}"
                                  icon="pi pi-plus" update="formEdicao" process="@this"
                                  oncomplete="PF('dlg').show();"/>
                 <!-- Paginação e filtro -->
@@ -98,7 +98,8 @@
                         <p:panelGrid columns="2">
                             <p:outputLabel value="ID"/>
                             <p:inputText value="#{controleFornecedor.objeto.id}"
-                                         size="5" readonly="true"/>
+                                         size="5" readonly="true"
+                                         placeholder="ID"/>
                             <p:outputLabel value="Nome" for="txtNome"/>
                             <p:inputText value="#{controleFornecedor.objeto.nome}"
                                          id="txtNome" size="40" maxlength="40"

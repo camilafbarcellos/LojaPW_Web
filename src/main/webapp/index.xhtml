@@ -2,15 +2,73 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/templates/template.xhtml">
         <ui:define name="titulo">
             Lumi Enxovais - Home
         </ui:define>
         <ui:define name="conteudo">
-            <h1>Lumi Enxovais</h1>
-            <p:outputLabel value="Bem vindo!"></p:outputLabel>
+            <div align="center" style="background-color: #dedede; border-radius: 5px">
+                <h:graphicImage library="imagens" name="logo-lumi.png" 
+                                    style="max-width: 225px;
+                                    max-height: 225px;
+                                    width: auto;
+                                    height: auto;">
+                </h:graphicImage>
+            </div>
+            <h2 align="center" style="font-weight: bold; color: #f48fb1">Bem-vindo ao sistema!</h2>
+            <div style="margin: 2rem auto;
+                 width: 70%;
+                 display: grid;
+                 grid-template-columns: repeat(4, 1fr)">
+                <section align="center" style="grid-column: span 2; height: 100%; margin-right: 25px">
+                    <h3>Objetivo</h3>
+                    <div style="text-align: justify">
+                        <p>O presente sistema foi desenvolvido para a avaliação prática da primeira
+                            etapa da disciplina de <b>Programação WEB</b>, ministrada pelo professor
+                            <b>Jorge Bavaresco</b> no semestre <b>2022/2</b>.</p>
+                        <p>O objetivo foi a implementação de uma <b>camada de modelo</b> com no
+                            mínimo 5 classes persistentes utilizando JPA e com validações em 
+                            todos os os seus atributos, com pelo menos uma das classes possuindo um
+                            relacionamento de muitos para um.</p>
+                        <p>A <b>camada web</b>, por sua vez, foi desenvolvida com Java Serves Faces
+                            e proporciona manutenções CRUD para pelo menos 3 classes, sendo uma delas
+                            com relacionamento muitos para um, e é hospedada em servidor Payara.</p>
+                    </div>
+                </section>
+                <section align="center" style="grid-column: span 2; height: 100%; margin-left: 25px">
+                    <h3>Funcionamento</h3>
+                    <div style="text-align: justify">
+                        <p>O sistema representa a administração de cadastros de uma loja de varejo
+                            chamada <b>Lumi Enxovais</b> que mantém registros acerca do seu negócio
+                            (vendas, clientes, produtos e fornecedores).</p>
+                        <p>Utilize o menu ao topo para navegar entre as categorias que deseja visualizar
+                            e realizar CRUD.</p>
+                    </div>
+                    <h3>GitHub</h3>
+                    <div style="text-align: left">
+                        <p><b>Camada de modelo: </b>https://github.com/camilafbarcellos/LojaPW_Model</p>
+                        <p><b>Camada web: </b>https://github.com/camilafbarcellos/LojaPW_Web</p>
+                    </div>
+                </section>
+            </div>
+            <div align="center">
+                <h3>Diagrama de classes do sistema</h3>
+                <h:graphicImage library="imagens" name="diagrama-classes.png" 
+                                    style="max-width: 800px;
+                                    max-height: 800px;
+                                    width: auto;
+                                    height: auto;
+                                    border-radius: 5px">
+                    </h:graphicImage>
+            </div>
+            <br/><br/>
+            <div align="center" style="font-size: small;
+                 font-weight: bold;
+                 background-color: #252525;
+                 border: solid 1px #191919;
+                 border-radius: 5px;
+                 padding: 15px">Copyright &copy; 2022 by Camila Florão Barcellos, IFSul</div>
         </ui:define>
     </ui:composition>
 </html>
